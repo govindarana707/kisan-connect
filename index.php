@@ -48,6 +48,67 @@
     </div>
   </div>
 </nav>
+
+<!-- second nav bar -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+  <ul class="navbar-nav me-auto">
+  <li class="nav-item">
+  <a class="nav-link" href="#">Welcome Guest</a>
+    <li class="nav-item">
+          <a class="nav-link" href="#">Login</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Register</a>
+          </ul>
+ </nav>
+ <!-- Third Child  -->
+  <div class="bg-light">
+    <h3 class="text-center">Hidden Store</h3>
+    <p class="text-center">Fully organic store </p>
+  </div>
+
+
+  <!-- Fourth child -->
+   <div class="row">
+    <div class="col-md-10">
+      <!-- Products  -->
+       <div class="row">
+       <div class="col-md-4">
+       <div class="card">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+       </div>
+       <div class="col-md-4">
+       <div class="card">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+       </div>
+       <div class="col-md-4">
+       <div class="card">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+</div>
+       </div>
+    </div>
+    <div class="col-md-2">
+      <!-- Side bar -->
+       <h1>Side bar</h1>
+    </div>
+   </div>
 <!-- footer section -->
  <div class="bg-info p-3 text-center">
 <p>All right reserved Kisan Connect -2024</p>
