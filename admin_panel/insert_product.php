@@ -1,46 +1,5 @@
 <?php
 include('../includes/connect.php');
-
-// Handle the form submission
-if (isset($_POST['insert_product'])) {
-    // Get form data
-    $product_title = mysqli_real_escape_string($conn, $_POST['product_title']);
-    $description = mysqli_real_escape_string($conn, $_POST['description']);
-    $product_keyword = mysqli_real_escape_string($conn, $_POST['product_keyword']);
-    $product_category = mysqli_real_escape_string($conn, $_POST['product_category']);
-    $product_brands = mysqli_real_escape_string($conn, $_POST['product_brands']);
-    $product_price = mysqli_real_escape_string($conn, $_POST['product_price']);
-    
-    // Image file handling
-    $product_image1 = $_FILES['product_image1']['name'];
-    $product_image1_temp = $_FILES['product_image1']['tmp_name'];
-    $product_image2 = $_FILES['product_image2']['name'];
-    $product_image2_temp = $_FILES['product_image2']['tmp_name'];
-    $product_image3 = $_FILES['product_image3']['name'];
-    $product_image3_temp = $_FILES['product_image3']['tmp_name'];
-    
-    // Directory to save images
-    $upload_dir = "../product_images/";
-    
-    // Move uploaded images to the product image folder
-    move_uploaded_file($product_image1_temp, $upload_dir . $product_image1);
-    move_uploaded_file($product_image2_temp, $upload_dir . $product_image2);
-    move_uploaded_file($product_image3_temp, $upload_dir . $product_image3);
-    
-    // SQL query to insert product data into the database
-    $insert_product_query = "INSERT INTO products (product_title, description, product_keyword, product_category, product_brands, product_price, product_image1, product_image2, product_image3)
-                             VALUES ('$product_title', '$description', '$product_keyword', '$product_category', '$product_brands', '$product_price', '$product_image1', '$product_image2', '$product_image3')";
-    
-    // Execute the query
-    $insert_result = mysqli_query($conn, $insert_product_query);
-    
-    // Check if the product was successfully inserted
-    if ($insert_result) {
-        echo "<script>alert('Product inserted successfully!');</script>";
-    } else {
-        echo "<script>alert('Error inserting product. Please try again.');</script>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
