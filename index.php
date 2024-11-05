@@ -1,3 +1,7 @@
+<!-- Connection  -->
+ <?php
+ include('includes/connect.php');
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +67,7 @@
 
  <!-- Third Child  -->
   <div class="bg-light">
-    <h3 class="text-center">Hidden Store</h3>
+    <h3 class="text-center">Kisan Connect Store</h3>
     <p class="text-center">Fully organic store </p>
   </div>
 
@@ -141,25 +145,26 @@
 
     <!-- Side bar -->
     <div class="col-md-2 bg-secondary p-0">
+      <!-- Category should be displayed here -->
        <ul class="navbar-nav me-auto text-center">
         <li class="nav-item  bg-info">
             <a href="#" class="nav-link text-light bg-success">category</a>
         </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-light">Vegetables</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-light">Fruits</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-light">Dairy Products</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-light">Domestic Animals </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-light">Meat Products</a>
-        </li>
+        <!-- Extracting the category from database -->
+        <?php
+// Correct SQL query (using backticks for table name if needed)
+$select_category = "SELECT * FROM categories";  // Removed single quotes around 'categories'
+$result_category = mysqli_query($conn, $select_category);
+    while($row_data = mysqli_fetch_assoc($result_category)){
+      $category_title=$row_data['category_title'];
+      $category_id=$row_data['category_id'];
+      echo" <li class='nav-item'>
+            <a href='index.php?category=$category_id' class='nav-link text-light'>$category_title</a>
+        </li>";
+    }
+        
+   
+?>
        </ul>
     </div>
    </div>
