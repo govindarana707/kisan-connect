@@ -77,24 +77,14 @@ if (isset($_POST['insert_product'])) {
                 <select name="product_category" class="form-select" required>
                     <option value="">Select a category</option>
                     <?php
-                                    // Correct SQL query (remove single quotes around table name)
-                                    $select_query = "SELECT * FROM categories";  // No single quotes around table name
+                                    $select_query = "SELECT * FROM categories";
                                     $result_query = mysqli_query($conn, $select_query);
-
-                                    // Check if query was successful
-                                    if ($result_query) {
                                         while ($row = mysqli_fetch_assoc($result_query)) {
-                                            // Fetch category data
                                             $category_title = $row['category_title'];
                                             $category_id = $row['category_id'];
-                                            
-                                            // Echo an option for each category
                                             echo "<option value='$category_id'>$category_title</option>";
                                         }
-                                    } else {
-                                        echo "<option value=''>No categories found</option>";  // Handle case where no categories exist
-                                    }
-                                    ?>
+                      ?>
 
                 </select>
             </div>
