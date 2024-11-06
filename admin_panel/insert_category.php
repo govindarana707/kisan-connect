@@ -34,8 +34,8 @@ if (isset($_POST['cat_insert'])) {
     mysqli_stmt_close($stmt);
 }
 ?>
-
-<form action="" method="POST">
+<h2 class="text-center">Insert Categories</h2>
+<form action="" method="POST" class="mb-2">
     <div class="input-group w-90 mb-2">
         <span class="input-group-text bg-info" id="addon-wrapping"><i class="fa-solid fa-receipt"></i></span>
         <input type="text" class="form-control" name="cat_title" placeholder="Insert Category" aria-label="Category Title" aria-describedby="addon-wrapping" required>
