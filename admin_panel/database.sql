@@ -10,3 +10,9 @@ product_id int(5) primary key AUTO_INCREMENT,
     product_image3 varchar(255),
     price varchar(100)
     );
+
+    -- Alter the product table
+    -- add time and status 
+    ALTER TABLE products
+ADD date TIMESTAMP NOT NULL AFTER price,
+ADD status varchar(100) NOT NULL AFTER date;
