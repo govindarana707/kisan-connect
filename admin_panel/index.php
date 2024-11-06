@@ -6,6 +6,7 @@
     <title>Admin Dashboard</title>
     <!-- Bootstrap CSS Link -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/admin.css">
 
@@ -41,7 +42,7 @@
             </div>
             <!-- Different buttons are created -->
             <div class="button text-center">
-                <button class="mx-3"><a href="" class="nav-link text-light bg-info my-1">insert Product</a></button>
+                <button class="mx-3"><a href="./insert_product.php" class="nav-link text-light bg-info my-1">insert Product</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">View Products</a></button>
                 <button><a href="./index.php?insert_category" class="nav-link text-light bg-info my-1">Insert category</a></button>
                 <button><a href="" class="nav-link text-light bg-info my-1">View Category</a></button>
@@ -55,7 +56,7 @@
         </div>
     </div>
 <!-- fourth child -->
- <div class="container my-5">
+ <div class="container my-3">
     <?php
     if(isset($_GET['insert_category'])){
         include('insert_category.php');
