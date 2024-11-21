@@ -1,6 +1,7 @@
 <!-- Connection  -->
 <?php
 include('includes/connect.php');
+include('functions/common_function.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,35 +85,7 @@ include('includes/connect.php');
         <div class="row">
           <!-- Fetching products -->
            <?php
-  $select_query="select * from products order by rand() limit 0,9";
-  $result_query=mysqli_query($conn,$select_query);
-  while($row=mysqli_fetch_array($result_query)){
-      $product_id=$row['product_id'];
-      $product_title=$row['product_title'];
-      $product_description=$row['product_description'];
-      $product_keyword=$row['product_keyword'];
-      $category_id=$row['category_id'];
-      $brand_id	=$row['brand_id'];
-      $product_image1=$row['product_image1'];
-      $product_image2=$row['product_image2'];
-      $product_image3=$row['product_image3'];
-      $price=$row['price'];
-      echo"
-      <div class='col-md-4 mb-2'>
-            <div class='card'>
-              <img src='./admin_panel/product_images/$product_image1' class='card-img-top' alt='$product_title'>
-              <div class='card-body'>
-                <h5 class='card-title'>$product_title</h5>
-                <p class='card-text'>$product_description</p>
-                <a href='#' class='btn btn-success'>Add to cart</a>
-                <a href='#' class='btn btn-secondary'>View more</a>
-              </div>
-            </div>
-          </div>
-      ";
-
-
-  }
+  getproducts();
            ?>
           
           <!-- row ending -->
