@@ -103,18 +103,7 @@ include('functions/common_function.php');
           </li>
           <!-- Extracting the category from database -->
           <?php
-          // Correct SQL query (using backticks for table name if needed)
-          $select_category = "SELECT * FROM categories";  // Removed single quotes around 'categories'
-          $result_category = mysqli_query($conn, $select_category);
-          while ($row_data = mysqli_fetch_assoc($result_category)) {
-            $category_title = $row_data['category_title'];
-            $category_id = $row_data['category_id'];
-            echo " <li class='nav-item'>
-            <a href='index.php?category=$category_id' class='nav-link text-light'>$category_title</a>
-        </li>";
-          }
-
-
+          getcategory();
           ?>
         </ul>
       </div>
