@@ -98,6 +98,13 @@ include('functions/common_function.php');
       <div class="col-md-2 bg-secondary p-0">
         <!-- Category should be displayed here -->
         <ul class="navbar-nav me-auto text-center">
+        <li class="nav-item  bg-info">
+            <a href="#" class="nav-link text-light bg-success">Brand</a>
+          </li>
+          <!-- Extracting the category from database -->
+          <?php
+          getbrand();
+          ?>
           <li class="nav-item  bg-info">
             <a href="#" class="nav-link text-light bg-success">category</a>
           </li>

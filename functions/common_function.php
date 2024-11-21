@@ -48,4 +48,17 @@ function getcategory(){
         </li>";
           }
 }
+// Brand function
+function getbrand(){
+    global $conn;
+    $select_category = "SELECT * FROM brand";  
+          $result_category = mysqli_query($conn, $select_category);
+          while ($row_data = mysqli_fetch_assoc($result_category)) {
+            $brand_title = $row_data['brand_title'];
+            $brand_id = $row_data['brand_id'];
+            echo " <li class='nav-item'>
+            <a href='index.php?category=$brand_id' class='nav-link text-light'>$brand_title</a>
+        </li>";
+          }
+}
 ?>
