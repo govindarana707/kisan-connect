@@ -89,7 +89,13 @@ if (isset($_POST['insert_product'])) {
             <div class="form-outline mb-4">
                 <select name="product_brands" class="form-select" required>
                     <option value="">Select a brand</option>
-                    <option value="">jumla</option>
+                    <?php
+                        $select_query = "SELECT * FROM brand";
+                        $result_query = mysqli_query($conn, $select_query);
+                        while ($row = mysqli_fetch_assoc($result_query)) {
+                            echo "<option value='{$row['brand_id']}'>{$row['brand_title']}</option>";
+                        }
+                    ?>
                     <!-- Brands Options -->
                 </select>
             </div>
