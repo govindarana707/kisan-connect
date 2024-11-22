@@ -86,6 +86,7 @@ include('functions/common_function.php');
           <!-- Fetching products -->
            <?php
   getproducts();
+  getuniquecategory() ;
            ?>
           
           <!-- row ending -->
