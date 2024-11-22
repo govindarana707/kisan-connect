@@ -85,7 +85,7 @@ include('functions/common_function.php');
         <div class="row">
           <!-- Fetching products -->
            <?php
-  getproducts();
+  getallproduct();
   getuniquecategory() ;
   getuniquebrand() ;
            ?>
@@ -120,7 +120,9 @@ include('functions/common_function.php');
 
 
     <!-- footer section -->
-    <?php
+    <!-- include footer -->
+     
+     <?php
      include('./includes/footer.php');
      ?>
 
