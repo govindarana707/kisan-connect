@@ -87,6 +87,7 @@ include('functions/common_function.php');
            <?php
   getproducts();
   getuniquecategory() ;
+  getuniquebrand() ;
            ?>
           
           <!-- row ending -->
