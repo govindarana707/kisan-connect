@@ -61,9 +61,9 @@ include('functions/common_function.php');
             </li>
 
           </ul>
-          <form class="d-flex" action="" method="get">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-light" type="submit">Search</button>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_data">
+             <input type="submit" value="search" class="btn btn-outline-light" name="search_data_product">
           </form>
         </div>
       </div>
@@ -85,7 +85,7 @@ include('functions/common_function.php');
         <div class="row">
           <!-- Fetching products -->
            <?php
-  getallproduct();
+  search_product();
   getuniquecategory() ;
   getuniquebrand() ;
            ?>
@@ -120,9 +120,7 @@ include('functions/common_function.php');
 
 
     <!-- footer section -->
-    <!-- include footer -->
-     
-     <?php
+    <?php
      include('./includes/footer.php');
      ?>
 
