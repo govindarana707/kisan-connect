@@ -16,3 +16,4 @@ product_id int(5) primary key AUTO_INCREMENT,
     ALTER TABLE products
 ADD date TIMESTAMP NOT NULL AFTER price,
 ADD status varchar(100) NOT NULL AFTER date;
+

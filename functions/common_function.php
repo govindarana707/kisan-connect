@@ -227,5 +227,61 @@ function search_product(){
     }
 }
 }
-    
-?>
+// View detail function
+function view_detail() {
+    global $conn;
+
+    // Check if the product_id is set in the URL
+    if (isset($_GET['product_id'])) {
+        // If category and brand are not set, fetch product details
+        if (!isset($_GET['category']) && !isset($_GET['brand'])) {
+            $product_id = intval($_GET['product_id']); // Sanitize input
+
+            // Prepared statement to fetch product details
+            $stmt = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
+            $stmt->bind_param("i", $product_id);
+            $stmt->execute();
+            $result_query = $stmt->get_result();
+
+            // Check if any product is found
+            if ($result_query->num_rows > 0) {
+                while ($row = $result_query->fetch_assoc()) {
+                    $product_title = $row['product_title'];
+                    $product_description = $row['product_description'];
+                    $product_image1 = $row['product_image1'];
+                    $product_image2 = $row['product_image2'];
+                    $product_image3 = $row['product_image3'];
+                    $price = $row['price'];
+
+                    // Display product details
+                    echo "
+                    <div class='product-detail'>
+                        <h2>$product_title</h2>
+                        <p>$product_description</p>
+                        <p><strong>Price: Rs$price</strong></p>
+
+                        <!-- Display images in a row -->
+                        <div class='product-images d-flex justify-content-between'>
+                            <img src='./admin_panel/product_images/$product_image1' alt='Image of $product_title' class='img-fluid' style='width: 30%;'>
+                            <img src='./admin_panel/product_images/$product_image2' alt='Image of $product_title' class='img-fluid' style='width: 30%;'>
+                            <img src='./admin_panel/product_images/$product_image3' alt='Image of $product_title' class='img-fluid' style='width: 30%;'>
+                        </div>
+
+                        <!-- Add to cart form -->
+                        <form action='cart.php' method='POST'>
+                            <input type='hidden' name='product_id' value='$product_id'>
+                            <input type='hidden' name='product_title' value='$product_title'>
+                            <input type='hidden' name='product_price' value='$price'>
+                            <button type='submit' name='add_to_cart' class='btn btn-success mt-3'>Add to Cart</button>
+                        </form>
+                    </div>
+                    ";
+                }
+            } else {
+                echo "<p>No product found for the provided ID.</p>";
+            }
+        }
+    } else {
+        echo "<p>Product ID not provided. Please select a product.</p>";
+    }
+}

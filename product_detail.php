@@ -82,33 +82,9 @@ include('functions/common_function.php');
       <div class="col-md-10">
         <!-- Products -->
         <div class="row">
-          <div class="row">
-            <!-- Product Card -->
-            <div class="col-md-4">
-              <div class='card'>
-                <img src='./images/apple.png' class='card-img-top' alt='$product_title'>
-                <div class='card-body'>
-                  <h5 class='card-title'>$product_title</h5>
-                  <p class='card-text'>$product_description</p>
-                  <p class='card-text'>Price: Rs $price</p>
-                  <a href='product_detail.php?product_id=$product_id' class='btn btn-secondary'>View more</a>
-                  <a href='#' class='btn btn-success'>Add to cart</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Related Images -->
-            <div class="col-md-8">
-              <div class="row">
-                <div class="col-md-6">
-                  <img src='./images/apple.png' class='img-fluid' alt='$product_title'>
-                </div>
-                <div class="col-md-6">
-                  <img src='./images/apple.png' class='img-fluid' alt='$product_title'>
-                </div>
-              </div>
-            </div>
-          </div>
+          <?php
+        view_detail();
+        ?>
         </div>
       </div>
 
