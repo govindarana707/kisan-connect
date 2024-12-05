@@ -197,7 +197,7 @@ function search_product(){
     $result_query = mysqli_query($conn, $search_query);
     
     if (!$result_query) {
-        die('Query failed: ' . mysqli_error($conn));
+        die('Query failed: ' .mysqli_connect_error($result_query,$conn));
     }
     $num_of_rows=mysqli_num_rows($result_query);
     if($num_of_rows== 0){
