@@ -30,7 +30,7 @@ function getproducts() {
                     <p class='card-text'>$product_description</p>
                     <p class='card-text'>Price: Rs $price</p>
                     <a href='product_detail.php?product_id=$product_id' class='btn btn-secondary'>View more</a>
-                    <a href='#' class='btn btn-success'>Add to cart</a>
+                    <a href='index.php?add_to_cart=$product_id' class='btn btn-success'>Add to cart</a>
                 </div>
             </div>
         </div>
@@ -71,7 +71,8 @@ if($num_of_rows== 0){
                     <p class='card-text'>$product_description</p>
                     <p class='card-text'>Price: Rs $price</p>
                     <a href='product_detail.php?product_id=$product_id' class='btn btn-secondary'>View more</a>
-                    <a href='#' class='btn btn-success'>Add to cart</a>
+                    <a href='index.php?add_to_cart=$product_id' class='btn btn-success'>Add to cart</a>
+
                 </div>
             </div>
         </div>
@@ -111,7 +112,8 @@ if($num_of_rows== 0){
                         <p class='card-text'>$product_description</p>
                         <p class='card-text'>Price: Rs $price</p>
                         <a href='product_detail.php?product_id=$product_id' class='btn btn-secondary'>View more</a>
-                        <a href='#' class='btn btn-success'>Add to cart</a>
+                        <a href='index.php?add_to_cart=$product_id' class='btn btn-success'>Add to cart</a>
+
                     </div>
                 </div>
             </div>
@@ -179,7 +181,8 @@ function getallproduct(){
                     <p class='card-text'>$product_description</p>
                     <p class='card-text'>Price: Rs $price</p>
                     <a href='product_detail.php?product_id=$product_id' class='btn btn-secondary'>View more</a>
-                    <a href='#' class='btn btn-success'>Add to cart</a>
+                    <a href='index.php?add_to_cart=$product_id' class='btn btn-success'>Add to cart</a>
+
                 </div>
             </div>
         </div>
@@ -219,7 +222,8 @@ function search_product(){
                     <p class='card-text'>$product_description</p>
                     <p class='card-text'>Price: Rs $price</p>
                     <a href='product_detail.php?product_id=$product_id' class='btn btn-secondary'>View more</a>
-                    <a href='#' class='btn btn-success'>Add to cart</a>
+                    <a href='index.php?add_to_cart=$product_id' class='btn btn-success'>Add to cart</a>
+
                 </div>
             </div>
         </div>
@@ -304,4 +308,40 @@ function getIPAddress() {
      return $ip;  
 }  
  
+
+// cart function
+function cart() {
+    if (isset($_GET['add_to_cart'])) {
+        global $conn;
+        $ip = getIPAddress();
+        $get_product_id = intval($_GET['add_to_cart']); // Sanitize input
+        
+        // Check if the product is already in the cart
+        $select_query = "SELECT * FROM `cart_details` WHERE ip_address = ? AND product_id = ?";
+        $stmt = $conn->prepare($select_query);
+        $stmt->bind_param('si', $ip, $get_product_id);
+        $stmt->execute();
+        $result_query = $stmt->get_result();
+        
+        if ($result_query->num_rows > 0) {
+            echo "<script>alert('This item is already present in the cart');</script>";
+            echo "<script>window.open('index.php', '_self');</script>";
+        } else {
+            // Insert the new item into the cart
+            $insert_query = "INSERT INTO `cart_details` (product_id, ip_address, quantity) VALUES (?, ?, 1)";
+            $stmt = $conn->prepare($insert_query);
+            $stmt->bind_param('is', $get_product_id, $ip);
+            
+            if ($stmt->execute()) {
+                echo "<script>alert('Item added to cart successfully');</script>";
+            } else {
+                echo "<script>alert('Failed to add item to cart');</script>";
+            }
+            echo "<script>window.open('index.php', '_self');</script>";
+        }
+        
+        $stmt->close();
+    }
+}
+
 ?>

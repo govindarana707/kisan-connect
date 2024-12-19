@@ -86,12 +86,11 @@ include('functions/common_function.php');
         <div class="row">
           <!-- Fetching products -->
            <?php
-           $ip = getIPAddress();  
-           echo 'User Real IP Address - '.$ip;
   getproducts();
   getuniquecategory() ;
   getuniquebrand() ;
-   
+  //  calling cart function
+  cart();
            ?>
           
           <!-- row ending -->
