@@ -359,7 +359,30 @@ function cart_item() {
     
     echo $count_cart_items;
 }
-
+// total price function
+function total_cart_price() {
+    global $conn; // Ensure the database connection is available
+    $total = 0;
+    $ip = getIPAddress(); // Fetch the user's IP address
+    
+    // Use a JOIN query to fetch cart details and product prices in one step
+    $cart_query = "
+        SELECT p.price 
+        FROM `cart_details` c 
+        JOIN `products` p ON c.product_id = p.product_id 
+        WHERE c.ip_address = ?";
+    
+    $stmt = $conn->prepare($cart_query);
+    $stmt->bind_param("s", $ip); // Bind the IP address as a parameter
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    while ($row = $result->fetch_assoc()) {
+        $total += $row['price']; // Add each product's price to the total
+    }
+    
+    echo $total; // Output the total cart price
+}
 
 
 ?>
