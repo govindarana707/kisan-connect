@@ -344,4 +344,22 @@ function cart() {
     }
 }
 
+// function to get cart number
+function cart_item() {
+    global $conn; // Ensure the database connection is available
+    $ip = getIPAddress(); // Fetch the IP address of the user
+    
+    // Check if the product is already in the cart
+    $select_query = "SELECT * FROM `cart_details` WHERE ip_address = ?";
+    $stmt = $conn->prepare($select_query);
+    $stmt->bind_param("s", $ip); // Use parameterized query to prevent SQL injection
+    $stmt->execute();
+    $result_query = $stmt->get_result();
+    $count_cart_items = $result_query->num_rows;
+    
+    echo $count_cart_items;
+}
+
+
+
 ?>
