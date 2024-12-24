@@ -1,94 +1,42 @@
 <?php
 include('../includes/connect.php');
-
 if (isset($_POST['insert_product'])) {
-    // Collect and sanitize form data
-    $product_title = $_POST['product_title'];
-    $product_description = $_POST['description'];
-    $product_keyword = $_POST['product_keyword'];
+    $product_title = mysqli_real_escape_string($conn, $_POST['product_title']);
+    $product_description = mysqli_real_escape_string($conn, $_POST['description']);
+    $product_keyword = mysqli_real_escape_string($conn, $_POST['product_keyword']);
     $category_id = $_POST['product_category'];
     $brand_id = $_POST['product_brands'];
     $product_status = "true";
     $product_price = $_POST['product_price'];
-
-    // Accessing image files
+    // Accessing images
     $product_image1 = $_FILES['product_image1']['name'];
     $product_image2 = $_FILES['product_image2']['name'];
     $product_image3 = $_FILES['product_image3']['name'];
-
-    // Accessing image temporary names
+    // Accessing image temp names
     $temp_image1 = $_FILES['product_image1']['tmp_name'];
     $temp_image2 = $_FILES['product_image2']['tmp_name'];
     $temp_image3 = $_FILES['product_image3']['tmp_name'];
-
-    // Checking empty fields
-    if (empty($product_title) || empty($product_description) || empty($category_id) || empty($product_price) || empty($product_image1)) {
+    // Checking empty condition
+    if ($product_title == '' || $product_description == '' || $category_id == '' || $product_price == '' || $product_image1 == '') {
         echo "<script>alert('Please fill all the fields');</script>";
         exit();
-    }
-
-    // Validate image files
-    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
-    $max_file_size = 5000000; // 5MB max file size
-    $image_errors = [];
-
-    // Check if images are valid
-    foreach (['product_image1', 'product_image2', 'product_image3'] as $index => $image_name) {
-        $file_tmp = $_FILES[$image_name]['tmp_name'];
-        $file_size = $_FILES[$image_name]['size'];
-        $file_extension = strtolower(pathinfo($_FILES[$image_name]['name'], PATHINFO_EXTENSION));
-
-        if ($_FILES[$image_name]['error'] != 0) {
-            $image_errors[] = "Error with image upload for $image_name.";
-        }
-        if (!in_array($file_extension, $allowed_extensions)) {
-            $image_errors[] = "Invalid file type for $image_name. Allowed types: jpg, jpeg, png, gif.";
-        }
-        if ($file_size > $max_file_size) {
-            $image_errors[] = "$image_name exceeds the maximum file size of 5MB.";
-        }
-    }
-
-    // Display any image upload errors
-    if (!empty($image_errors)) {
-        foreach ($image_errors as $error) {
-            echo "<script>alert('$error');</script>";
-        }
-        exit();
-    }
-
-    // Moving uploaded files to the correct directory
-    move_uploaded_file($temp_image1, "./product_images/$product_image1");
-    move_uploaded_file($temp_image2, "./product_images/$product_image2");
-    move_uploaded_file($temp_image3, "./product_images/$product_image3");
-
-    // Prepare the insert query using a prepared statement
-    $insert_query = "INSERT INTO products (product_title, product_description, product_keyword, category_id, brand_id, product_image1, product_image2, product_image3, price, date, status) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
-
-    // Prepare the statement
-    $stmt = mysqli_prepare($conn, $insert_query);
-
-    if ($stmt === false) {
-        echo "<script>alert('Error preparing the SQL statement');</script>";
-        exit();
-    }
-
-    // Bind the parameters
-    mysqli_stmt_bind_param($stmt, 'sssiissdss', $product_title, $product_description, $product_keyword, $category_id, $brand_id, $product_image1, $product_image2, $product_image3, $product_price, $product_status);
-
-    // Execute the query
-    if (mysqli_stmt_execute($stmt)) {
-        echo "<script>alert('Product inserted successfully');</script>";
     } else {
-        echo "<script>alert('Error inserting product');</script>";
+        // Moving uploaded files to destination folder
+        move_uploaded_file($temp_image1, "./product_images/$product_image1");
+        move_uploaded_file($temp_image2, "./product_images/$product_image2");
+        move_uploaded_file($temp_image3, "./product_images/$product_image3");
+        // Insert query
+        $insert_products = "INSERT INTO products (product_title, product_description, product_keyword, category_id, brand_id, product_image1, product_image2, product_image3, price, date, status) 
+                            VALUES ('$product_title', '$product_description', '$product_keyword', '$category_id', '$brand_id', '$product_image1', '$product_image2', '$product_image3', '$product_price', NOW(), '$product_status')";
+        $result_query = mysqli_query($conn, $insert_products);
+        if ($result_query) {
+            echo "<script>alert('Product inserted successfully');</script>";
+        } else {
+            echo "<script>alert('Error inserting product');</script>";
+        }
     }
-
-    // Close the prepared statement
-    mysqli_stmt_close($stmt);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,8 +50,9 @@ if (isset($_POST['insert_product'])) {
 <body class="bg-light">
     <div class="container mt-3 w-50 m-auto">
         <h1 class="text-center">Insert Product</h1>
+        <!-- Product Insert Form -->
         <form action="" method="post" enctype="multipart/form-data">
-            <!-- Product Fields: Title, Description, etc. -->
+            <!-- Form Fields: Product Title, Description, etc. -->
             <div class="form-outline mb-4">
                 <label for="product_title" class="form-label">Product Title</label>
                 <input type="text" name="product_title" id="product_title" class="form-control" placeholder="Enter product title" required>
@@ -116,12 +65,12 @@ if (isset($_POST['insert_product'])) {
                 <label for="product_keyword" class="form-label">Product Keyword</label>
                 <input type="text" name="product_keyword" id="product_keyword" class="form-control" placeholder="Enter product keyword" required>
             </div>
-            <!-- Categories and Brands -->
+            <!-- Product Categories and Brands -->
             <div class="form-outline mb-4">
                 <select name="product_category" class="form-select" required>
                     <option value="">Select a category</option>
                     <?php
-                        $select_query = "SELECT * FROM category";
+                        $select_query = "SELECT * FROM categories";
                         $result_query = mysqli_query($conn, $select_query);
                         while ($row = mysqli_fetch_assoc($result_query)) {
                             echo "<option value='{$row['category_id']}'>{$row['category_title']}</option>";
@@ -139,9 +88,10 @@ if (isset($_POST['insert_product'])) {
                             echo "<option value='{$row['brand_id']}'>{$row['brand_title']}</option>";
                         }
                     ?>
+                    <!-- Brands Options -->
                 </select>
             </div>
-            <!-- Image Fields -->
+            <!-- Product Images -->
             <div class="form-outline mb-4">
                 <label for="product_image1" class="form-label">Product Image 1</label>
                 <input type="file" name="product_image1" id="product_image1" class="form-control" required>
@@ -154,7 +104,7 @@ if (isset($_POST['insert_product'])) {
                 <label for="product_image3" class="form-label">Product Image 3</label>
                 <input type="file" name="product_image3" id="product_image3" class="form-control" required>
             </div>
-            <!-- Price Field -->
+            <!-- Product Price -->
             <div class="form-outline mb-4">
                 <label for="product_price" class="form-label">Product Price</label>
                 <input type="text" name="product_price" id="product_price" class="form-control" placeholder="Enter product price" required>

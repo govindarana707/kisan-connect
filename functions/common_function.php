@@ -126,7 +126,7 @@ if($num_of_rows== 0){
 function getcategory(){
     global $conn;
 
-    $select_category = "SELECT * FROM categories";  
+    $select_category = "SELECT * FROM category";  
           $result_category = mysqli_query($conn, $select_category);
           while ($row_data = mysqli_fetch_assoc($result_category)) {
             $category_title = $row_data['category_title'];
